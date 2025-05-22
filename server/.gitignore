@@ -13,9 +13,11 @@ yarn-error.log*
 
 # TypeScript
 *.tsbuildinfo
-
+#
+generated/
 # Prisma
 prisma/migrations/
+db-data
 .prisma/
 
 # Logs
