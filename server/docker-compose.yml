@@ -1,0 +1,13 @@
+version: '3'
+services:
+  user_service:
+    image: "postgres:14.0"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user_db
+      POSTGRES_PASSWORD:  user_db_password
+      POSTGRES_DB: user_service
+    volumes:
+      - ./db-data/user_db:/var/lib/postgresql/data
+  
