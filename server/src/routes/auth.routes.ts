@@ -1,0 +1,11 @@
+import { Router } from "express";
+import prisma from "../db/primsa.client";
+import AuthController from "../controllers/auth.controller";
+import AuthService from "../services/auth.service";
+import verifyJwt from "../middlewares/auth.middleware";
+const router = Router();
+const controller = new AuthController(new AuthService(prisma));
+router.route("/login").post(controller.login);
+router.route("/logout").get(verifyJwt,controller.logout);
+router.route("/profile").get(verifyJwt,controller.getProfile);
+export default router;

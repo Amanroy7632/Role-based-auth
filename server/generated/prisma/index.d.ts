@@ -915,6 +915,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     profileImg: string | null
     mobile: string | null
+    refreshToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -927,6 +928,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     profileImg: string | null
     mobile: string | null
+    refreshToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -939,6 +941,7 @@ export namespace Prisma {
     role: number
     profileImg: number
     mobile: number
+    refreshToken: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -961,6 +964,7 @@ export namespace Prisma {
     role?: true
     profileImg?: true
     mobile?: true
+    refreshToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -973,6 +977,7 @@ export namespace Prisma {
     role?: true
     profileImg?: true
     mobile?: true
+    refreshToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -985,6 +990,7 @@ export namespace Prisma {
     role?: true
     profileImg?: true
     mobile?: true
+    refreshToken?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1084,6 +1090,7 @@ export namespace Prisma {
     role: $Enums.Role
     profileImg: string | null
     mobile: string | null
+    refreshToken: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1115,6 +1122,7 @@ export namespace Prisma {
     role?: boolean
     profileImg?: boolean
     mobile?: boolean
+    refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1127,6 +1135,7 @@ export namespace Prisma {
     role?: boolean
     profileImg?: boolean
     mobile?: boolean
+    refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1139,6 +1148,7 @@ export namespace Prisma {
     role?: boolean
     profileImg?: boolean
     mobile?: boolean
+    refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1151,11 +1161,12 @@ export namespace Prisma {
     role?: boolean
     profileImg?: boolean
     mobile?: boolean
+    refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profileImg" | "mobile" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profileImg" | "mobile" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1168,6 +1179,7 @@ export namespace Prisma {
       role: $Enums.Role
       profileImg: string | null
       mobile: string | null
+      refreshToken: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1600,6 +1612,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly profileImg: FieldRef<"User", 'String'>
     readonly mobile: FieldRef<"User", 'String'>
+    readonly refreshToken: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -1990,6 +2003,7 @@ export namespace Prisma {
     role: 'role',
     profileImg: 'profileImg',
     mobile: 'mobile',
+    refreshToken: 'refreshToken',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2110,6 +2124,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profileImg?: StringNullableFilter<"User"> | string | null
     mobile?: StringNullableFilter<"User"> | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -2122,6 +2137,7 @@ export namespace Prisma {
     role?: SortOrder
     profileImg?: SortOrderInput | SortOrder
     mobile?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2137,6 +2153,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profileImg?: StringNullableFilter<"User"> | string | null
     mobile?: StringNullableFilter<"User"> | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "email">
@@ -2149,6 +2166,7 @@ export namespace Prisma {
     role?: SortOrder
     profileImg?: SortOrderInput | SortOrder
     mobile?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -2169,6 +2187,7 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     profileImg?: StringNullableWithAggregatesFilter<"User"> | string | null
     mobile?: StringNullableWithAggregatesFilter<"User"> | string | null
+    refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -2180,6 +2199,7 @@ export namespace Prisma {
     role: $Enums.Role
     profileImg?: string | null
     mobile?: string | null
+    refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2192,6 +2212,7 @@ export namespace Prisma {
     role: $Enums.Role
     profileImg?: string | null
     mobile?: string | null
+    refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2203,6 +2224,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2215,6 +2237,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2227,6 +2250,7 @@ export namespace Prisma {
     role: $Enums.Role
     profileImg?: string | null
     mobile?: string | null
+    refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2238,6 +2262,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2250,6 +2275,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2326,6 +2352,7 @@ export namespace Prisma {
     role?: SortOrder
     profileImg?: SortOrder
     mobile?: SortOrder
+    refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2342,6 +2369,7 @@ export namespace Prisma {
     role?: SortOrder
     profileImg?: SortOrder
     mobile?: SortOrder
+    refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2354,6 +2382,7 @@ export namespace Prisma {
     role?: SortOrder
     profileImg?: SortOrder
     mobile?: SortOrder
+    refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
