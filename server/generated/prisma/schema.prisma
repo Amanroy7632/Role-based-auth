@@ -29,6 +29,7 @@ model User {
   profileImg   String?
   mobile       String?
   refreshToken String?
+  isVerified   Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

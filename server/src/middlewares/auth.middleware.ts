@@ -1,20 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_ACCESS_SECRET } from "../config";
+import { JWT_ACCESS_SECRET ,JWT_ACCOUNT_VERIFICATION_SECRET} from "../config";
 import { IUser } from "../interfaces/user.interface";
-
-const verifyJwt = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+import { ApiError } from "../utils";
+const verifyJwt = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized: No token provided" });
+    const accessToken =
+      req.cookies?.accessToken ||
+      req.header("Authorization")?.replace("Bearer ", "") ||
+      null;
+    if (!accessToken) {
+      return next(new ApiError(401, "Expired access token"));
     }
-
-    const token = authHeader.split(" ")[1];
-
-    const decoded = jwt.verify(token, JWT_ACCESS_SECRET) as IUser;
+    const decoded = jwt.verify(accessToken, JWT_ACCESS_SECRET) as IUser;
 
     if (decoded) {
       (req as any).user = decoded;
@@ -22,9 +24,9 @@ const verifyJwt = async (req: Request, res: Response, next: NextFunction): Promi
 
     next();
   } catch (error) {
-    console.error("JWT verification error:", error);
-    return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    next(new ApiError(401, "Unauthorized: Invalid token"));
   }
 };
+
 
 export default verifyJwt;

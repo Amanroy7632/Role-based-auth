@@ -8,6 +8,11 @@ export default class AuthController {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.getProfile = this.getProfile.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
+    this.getResetPasswordLink = this.getResetPasswordLink.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
+    this.getCurrentUser = this.getCurrentUser.bind(this);
+    this.refreshUser = this.refreshUser.bind(this);
   }
   async login(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
@@ -17,7 +22,7 @@ export default class AuthController {
         sameSite: true,
         secure: NODE_ENV === "production",
       });
-      res.cookie("refreshoken", user.token.refreshToken, {
+      res.cookie("refreshToken", user.token.refreshToken, {
         sameSite: true,
         secure: NODE_ENV === "production",
         httpOnly: true,
@@ -43,6 +48,73 @@ export default class AuthController {
       next(error);
     }
   }
+  async verifyEmail(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        const {token} = req.query as any;
+      if (!token) {
+        return next( new ApiError(400, "Invalid token."));
+      }
+      const updatedUser=await this.authService.verifyEmail(token);
+      if (!updatedUser) {
+        return next(new ApiError(500,"Failed to verify the user."));
+      }
+      return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Logout successfully."));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getResetPasswordLink(req: Request, res: Response, next: NextFunction):Promise<any>{
+    try {
+      const {email} =req.body;
+      const isLinkSent = await this.authService.getResetPasswordLink(email);
+      if (!isLinkSent) {
+        return next(new ApiError(500,"Failed to send the link"));
+      }
+      return res.status(200).json(new ApiResponse(200,{},"Reset password link sent to email."));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async resetPassword(req: Request, res: Response, next: NextFunction):Promise<any>{
+    try {
+      const {token,password} =req.body;
+      const isPasswordReset = await this.authService.resetPassword(token,password);
+      if (!isPasswordReset) {
+        return next(new ApiError(500,"Failed to reset the password"));
+      }
+      return res.status(200).json(new ApiResponse(200,{},"Congratulations password reset successfully."));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getCurrentUser(req: Request, res: Response, next: NextFunction):Promise<any>{
+    try {
+      const user =(req as any).user as IUser;
+      if (!user) {
+        return next(new ApiError(401,"Token expired."));
+      }
+      return res.status(200).json(new ApiResponse(200,user));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async refreshUser(req: Request, res: Response, next: NextFunction):Promise<any>{
+    try {
+      const refreshToken = req.cookies?.refreshToken||null;
+      if (!refreshToken) {
+        return  next(new ApiError(403,"Unauthorized access"));
+      }
+      const accessToken = await this.authService.refreshUser(refreshToken);
+      res.cookie("accessToken",accessToken,{sameSite:true,httpOnly:true,secure:NODE_ENV==="production"});
+      return res.status(200).json(new ApiResponse(200,accessToken));
+      
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getProfile(
     req: Request,
     res: Response,

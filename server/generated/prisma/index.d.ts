@@ -916,6 +916,7 @@ export namespace Prisma {
     profileImg: string | null
     mobile: string | null
     refreshToken: string | null
+    isVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -929,6 +930,7 @@ export namespace Prisma {
     profileImg: string | null
     mobile: string | null
     refreshToken: string | null
+    isVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -942,6 +944,7 @@ export namespace Prisma {
     profileImg: number
     mobile: number
     refreshToken: number
+    isVerified: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -965,6 +968,7 @@ export namespace Prisma {
     profileImg?: true
     mobile?: true
     refreshToken?: true
+    isVerified?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -978,6 +982,7 @@ export namespace Prisma {
     profileImg?: true
     mobile?: true
     refreshToken?: true
+    isVerified?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -991,6 +996,7 @@ export namespace Prisma {
     profileImg?: true
     mobile?: true
     refreshToken?: true
+    isVerified?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1091,6 +1097,7 @@ export namespace Prisma {
     profileImg: string | null
     mobile: string | null
     refreshToken: string | null
+    isVerified: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1123,6 +1130,7 @@ export namespace Prisma {
     profileImg?: boolean
     mobile?: boolean
     refreshToken?: boolean
+    isVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1136,6 +1144,7 @@ export namespace Prisma {
     profileImg?: boolean
     mobile?: boolean
     refreshToken?: boolean
+    isVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1149,6 +1158,7 @@ export namespace Prisma {
     profileImg?: boolean
     mobile?: boolean
     refreshToken?: boolean
+    isVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1162,11 +1172,12 @@ export namespace Prisma {
     profileImg?: boolean
     mobile?: boolean
     refreshToken?: boolean
+    isVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profileImg" | "mobile" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profileImg" | "mobile" | "refreshToken" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1180,6 +1191,7 @@ export namespace Prisma {
       profileImg: string | null
       mobile: string | null
       refreshToken: string | null
+      isVerified: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1613,6 +1625,7 @@ export namespace Prisma {
     readonly profileImg: FieldRef<"User", 'String'>
     readonly mobile: FieldRef<"User", 'String'>
     readonly refreshToken: FieldRef<"User", 'String'>
+    readonly isVerified: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2004,6 +2017,7 @@ export namespace Prisma {
     profileImg: 'profileImg',
     mobile: 'mobile',
     refreshToken: 'refreshToken',
+    isVerified: 'isVerified',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2083,6 +2097,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2125,6 +2146,7 @@ export namespace Prisma {
     profileImg?: StringNullableFilter<"User"> | string | null
     mobile?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
+    isVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -2138,6 +2160,7 @@ export namespace Prisma {
     profileImg?: SortOrderInput | SortOrder
     mobile?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2154,6 +2177,7 @@ export namespace Prisma {
     profileImg?: StringNullableFilter<"User"> | string | null
     mobile?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
+    isVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "email">
@@ -2167,6 +2191,7 @@ export namespace Prisma {
     profileImg?: SortOrderInput | SortOrder
     mobile?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -2188,6 +2213,7 @@ export namespace Prisma {
     profileImg?: StringNullableWithAggregatesFilter<"User"> | string | null
     mobile?: StringNullableWithAggregatesFilter<"User"> | string | null
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -2200,6 +2226,7 @@ export namespace Prisma {
     profileImg?: string | null
     mobile?: string | null
     refreshToken?: string | null
+    isVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2213,6 +2240,7 @@ export namespace Prisma {
     profileImg?: string | null
     mobile?: string | null
     refreshToken?: string | null
+    isVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2225,6 +2253,7 @@ export namespace Prisma {
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2238,6 +2267,7 @@ export namespace Prisma {
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2251,6 +2281,7 @@ export namespace Prisma {
     profileImg?: string | null
     mobile?: string | null
     refreshToken?: string | null
+    isVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2263,6 +2294,7 @@ export namespace Prisma {
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2276,6 +2308,7 @@ export namespace Prisma {
     profileImg?: NullableStringFieldUpdateOperationsInput | string | null
     mobile?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2328,6 +2361,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2353,6 +2391,7 @@ export namespace Prisma {
     profileImg?: SortOrder
     mobile?: SortOrder
     refreshToken?: SortOrder
+    isVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2370,6 +2409,7 @@ export namespace Prisma {
     profileImg?: SortOrder
     mobile?: SortOrder
     refreshToken?: SortOrder
+    isVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2383,6 +2423,7 @@ export namespace Prisma {
     profileImg?: SortOrder
     mobile?: SortOrder
     refreshToken?: SortOrder
+    isVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2453,6 +2494,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2477,6 +2526,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -2535,6 +2588,11 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -2628,6 +2686,14 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

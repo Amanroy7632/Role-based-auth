@@ -129,6 +129,7 @@ exports.Prisma.UserScalarFieldEnum = {
   profileImg: 'profileImg',
   mobile: 'mobile',
   refreshToken: 'refreshToken',
+  isVerified: 'isVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

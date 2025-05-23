@@ -1,4 +1,3 @@
-// src/types/AuthRequest.ts
 import { Request } from "express";
 import { IUser } from "../interfaces/user.interface";
 

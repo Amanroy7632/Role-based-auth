@@ -42,11 +42,22 @@ export default class UserRepositoy implements IUserRepositoty {
     }
     return { ...user, password: "" } as User;
   }
-  async find(limit: number, offset: number): Promise<FindUser> {
+  async find(limit: number, offset: number,search?:string): Promise<FindUser> {
+    console.log(search);
+    
+    const whereClause:Prisma.UserWhereInput = search
+    ? {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { email: { contains: search, mode: "insensitive" } },
+        ],
+      }
+    : {};
     const [users, totalUsers] = await Promise.all([
       this._prisma.user.findMany({
         skip: offset,
         take: limit,
+        where:whereClause,
         select: {
           id: true,
           name: true,
@@ -59,7 +70,7 @@ export default class UserRepositoy implements IUserRepositoty {
           id: "asc",
         },
       }),
-      this._prisma.user.count(),
+      this._prisma.user.count({where:whereClause}),
     ]);
     return { users, totalUsers };
   }

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import UserService from "../services/user.service";
 import { ApiError, ApiResponse, filterQuery, RequestValidator } from "../utils";
 import { CreateUserRequest, UpdateUserRequest } from "../dto/user.dto";
-import {redis,scanAndDeleteKeys} from "../config/redis"
+import {redis,scanAndDeleteKeys} from "../config/redis.config"
 export default  class UserController{
     constructor(private userService:UserService){
         this.userService=userService;
@@ -47,7 +47,7 @@ export default  class UserController{
     }
     async getUsers(req:Request,res:Response,next:NextFunction):Promise<any>{
         try {
-            const {page=1,limit=10} =req.query;
+            const {page=1,limit=10,search=''} =req.query;
             const {pageLimit,currentPage,offset} = filterQuery.getPaginatedValue(page,limit);
             const cachedKey = `USERS:CACHED:page:${currentPage}:limit:${pageLimit}`;
             const cachedData = await redis.get(cachedKey);
