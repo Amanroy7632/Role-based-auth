@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useSearch } from "../../context/searchContext";
 import { FiUsers } from "react-icons/fi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../../constant";
 import TableSkeletonLoader from "../../components/common/TableSkeltonLoader";
 import { useAuth } from "../../context/authContext";
+import Pagination from "../../components/common/Pagination";
 function UserPage() {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("all");
-  const {  debouncedQuery } = useSearch();
+  const { debouncedQuery } = useSearch();
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["users", currentPage,debouncedQuery],
+    queryKey: ["users", currentPage, debouncedQuery],
     queryFn: async () => {
       const response = await axios.get(
-        `${BASE_URL}/users?page=${currentPage}&limit=10&search=${debouncedQuery}`
+        `${BASE_URL}/users?page=${currentPage}&limit=6&search=${debouncedQuery}`
       );
       if (response.status === 200) {
         const { data } = response.data;
@@ -27,50 +29,6 @@ function UserPage() {
     },
   });
 
-  // Mock user data
-  const users = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      role: "Admin",
-      status: "active",
-      lastActive: "2 hours ago",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      role: "User",
-      status: "active",
-      lastActive: "1 day ago",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      role: "Editor",
-      status: "inactive",
-      lastActive: "1 week ago",
-    },
-    {
-      id: 4,
-      name: "Alice Williams",
-      email: "alice@example.com",
-      role: "User",
-      status: "active",
-      lastActive: "5 minutes ago",
-    },
-    {
-      id: 5,
-      name: "Charlie Brown",
-      email: "charlie@example.com",
-      role: "User",
-      status: "suspended",
-      lastActive: "1 month ago",
-    },
-  ];
-
   const filteredUsers =
     data?.users?.filter((user) => {
       const matchesSearch =
@@ -79,10 +37,33 @@ function UserPage() {
       const matchesTab = activeTab === "all" || user.status === activeTab;
       return matchesSearch && matchesTab;
     }) || [];
+  const handleDelete = async (id) => {
+    try {
+      if (!confirm("Are you sure ?")) {
+        return;
+      }
+      const response = await axios.delete(`${BASE_URL}/users/${id}`);
+      if (response.status === 200) {
+        alert("User account has been deleted successful");
+        queryClient.setQueryData(
+          ["users", currentPage, debouncedQuery],
+          (oldData) => {
+            if (!oldData) return oldData;
+            return {
+              ...oldData,
+              users: oldData.users.filter((user) => user.id !== id),
+            };
+          }
+        );
+      }
+    } catch (error) {
+      alert("Failed to delete the user account.");
+    }
+  };
   return (
-    <div className="flex flex-col space-y-6">
+    <div className="flex flex-col space-y-3">
       {/* Stats cards */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="p-6 bg-white rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
@@ -237,7 +218,10 @@ function UserPage() {
                         <div className="flex-shrink-0 w-10 h-10">
                           <img
                             className="w-10 h-10 rounded-full"
-                            src={`https://randomuser.me/api/portraits/men/${user.id}.jpg`}
+                            src={
+                              user?.profileImg ||
+                              `https://randomuser.me/api/portraits/men/${user.id}.jpg`
+                            }
                             alt=""
                           />
                         </div>
@@ -269,14 +253,14 @@ function UserPage() {
                       <span
                         className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                             ${
-                              user.status === "active"
+                              user.isVerified
                                 ? "bg-green-100 text-green-800"
-                                : user.status === "inactive"
-                                ? "bg-yellow-100 text-yellow-800"
                                 : "bg-red-100 text-red-800"
+                              // ? "bg-yellow-100 text-yellow-800"
+                              // : "bg-red-100 text-red-800"
                             }`}
                       >
-                        {user.status}
+                        {user.isVerified ? "Active" : "Inactive"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -288,9 +272,15 @@ function UserPage() {
                           Edit
                         </button>
                       )}
-                      {currentUser.role!=="USER"&&<button className="text-red-600 hover:text-red-900">
-                        Delete
-                      </button>}
+                      {currentUser?.role === "ADMIN" &&
+                        user.role !== "ADMIN" && (
+                          <button
+                            onClick={() => handleDelete(user.id)}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            Delete
+                          </button>
+                        )}
                     </td>
                   </tr>
                 ))}
@@ -301,7 +291,8 @@ function UserPage() {
         {isLoading && <TableSkeletonLoader rows={5} />}
 
         {/* Pagination */}
-        <div className="flex items-center justify-between mt-6">
+        <Pagination metaData={data?.metaData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        {/* <div className="flex items-center justify-between mt-6">
           <div className="text-sm text-gray-700">
             Showing <span className="font-medium">1</span> to{" "}
             <span className="font-medium">5</span> of{" "}
@@ -315,7 +306,7 @@ function UserPage() {
               Next
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

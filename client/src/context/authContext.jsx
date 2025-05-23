@@ -60,7 +60,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/users/logout`, {
+      const response = await axios.get(`${BASE_URL}/auth/logout`, {
         withCredentials: true,
       });
       if (response.status === 200 && response.data?.statusCode === 200) {

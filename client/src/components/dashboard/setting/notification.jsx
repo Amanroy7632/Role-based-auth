@@ -3,7 +3,6 @@ import ToggleSwitch from "../../common/ToggleSwitch";
 function Notification() {
   const [notifications, setNotifications] = useState(true);
   const [emailUpdates, setEmailUpdates] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-6">Notification Settings</h2>

@@ -53,9 +53,6 @@ const buttons = [
   },
 ];
 const SettingsPage = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
- 
 
   const [activeTab, setActiveTab] = useState("account");
   const getTabRender = (id) => {
@@ -70,9 +67,7 @@ const SettingsPage = () => {
   };
   return (
     <div
-      className={`min-h-screen ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      className={`min-h-screen dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row gap-8">
@@ -87,7 +82,7 @@ const SettingsPage = () => {
                   className={`flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg ${
                     activeTab === button.id
                       ? "bg-blue-100 text-blue-700"
-                      : "hover:bg-gray-200"
+                      : "hover:bg-gray-200 dark:hover:bg-gray-500"
                   }`}
                 >
                   {" "}

@@ -26,7 +26,7 @@ const DashboardLayout = () => {
         {/* Header */}
         <Header setSearchQuery={setSearchQuery}  searchQuery={searchQuery} setSidebarOpen={setSidebarOpen}/>
         {/* Page content */}
-        <main className="p-6">
+        <main className="p-3">
           <Outlet/>
         </main>
       </div>

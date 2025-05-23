@@ -1,6 +1,8 @@
 import React from "react";
 import ToggleSwitch from "../../common/ToggleSwitch";
+import { useTheme } from "../../../context/themeContext";
 function Appearance() {
+  const { toggleTheme,themeMode } = useTheme();
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-6">Appearance</h2>
@@ -12,7 +14,20 @@ function Appearance() {
               Switch between light and dark theme
             </p>
           </div>
-          <ToggleSwitch enabled={darkMode} setEnabled={setDarkMode} />
+          <button
+            type="button"
+            className={`${
+              themeMode==="dark" ? "bg-blue-600" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+            onClick={toggleTheme}
+          >
+            <span
+              className={`${
+                themeMode==="dark" ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+            />
+          </button>
+          {/* <ToggleSwitch enabled={darkMode} setEnabled={setDarkMode} /> */}
         </div>
 
         <div className="border-t pt-6">
