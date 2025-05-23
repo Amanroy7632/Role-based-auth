@@ -9,6 +9,7 @@ router.route("/login").post(controller.login);
 router.route("/logout").get(verifyJwt,controller.logout);
 router.route("/profile").get(verifyJwt,controller.getProfile);
 router.route("/verify-account").get(controller.verifyEmail);
+router.route("/get-verification-link").post(controller.getVerificationMail);
 router.route("/reset-password-link").post(controller.getResetPasswordLink);
 router.route("/reset-password").patch(verifyJwt,controller.resetPassword);
 router.route("/current-user").get(verifyJwt,controller.getCurrentUser);

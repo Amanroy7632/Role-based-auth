@@ -6,6 +6,7 @@ export type FindUser={
         role:string;
         mobile?:string|null;
         profileImg?:string|null;
+        isVerified?:boolean;
     }[];
     totalUsers:number;
 }

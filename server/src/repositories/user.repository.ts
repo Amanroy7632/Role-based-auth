@@ -43,8 +43,6 @@ export default class UserRepositoy implements IUserRepositoty {
     return { ...user, password: "" } as User;
   }
   async find(limit: number, offset: number,search?:string): Promise<FindUser> {
-    console.log(search);
-    
     const whereClause:Prisma.UserWhereInput = search
     ? {
         OR: [
@@ -65,6 +63,7 @@ export default class UserRepositoy implements IUserRepositoty {
           role: true,
           profileImg: true,
           mobile: true,
+          isVerified:true,
         },
         orderBy: {
           id: "asc",

@@ -1,4 +1,4 @@
-export const ACCOUNT_CREATE_SUCCESS_MAIL=`<!DOCTYPE html>
+export const ACCOUNT_CREATE_SUCCESS_MAIL = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -86,7 +86,7 @@ export const ACCOUNT_CREATE_SUCCESS_MAIL=`<!DOCTYPE html>
 </body>
 </html>
 `;
-export const ACCOUNT_VERIFICATION_SUCCESS=`<!DOCTYPE html>
+export const ACCOUNT_VERIFICATION_SUCCESS = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -154,7 +154,7 @@ export const ACCOUNT_VERIFICATION_SUCCESS=`<!DOCTYPE html>
 </body>
 </html>
 `;
-export const RESET_PASSWORD_LINK=`<!DOCTYPE html>
+export const RESET_PASSWORD_LINK = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -205,4 +205,74 @@ export const RESET_PASSWORD_LINK=`<!DOCTYPE html>
   </table>
 </body>
 </html>
-`
+`;
+export const ACCOUNT_VERIFICATION_MAIL = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verify Your Email</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+      }
+      .header h1 {
+        color: #4f46e5;
+        margin: 0;
+      }
+      .content {
+        padding: 20px 0;
+      }
+      .button {
+        display: inline-block;
+        padding: 12px 20px;
+        margin-top: 20px;
+        background-color: #4f46e5;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Verify Your Account</h1>
+      </div>
+      <div class="content">
+        <p>Hello {{name}},</p>
+        <p>Thank you for registering. Please click the button below to verify your email address and activate your account:</p>
+        <p style="text-align: center;">
+          <a href="{{verification_link}}" class="button">Verify Account</a>
+        </p>
+        <p>If you didn’t create this account, you can safely ignore this email.</p>
+      </div>
+      <div class="footer">
+        &copy; 2025 Aman.dev. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>
+`;

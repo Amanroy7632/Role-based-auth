@@ -13,6 +13,7 @@ export default class AuthController {
     this.resetPassword = this.resetPassword.bind(this);
     this.getCurrentUser = this.getCurrentUser.bind(this);
     this.refreshUser = this.refreshUser.bind(this);
+    this.getVerificationMail = this.getVerificationMail.bind(this);
   }
   async login(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
@@ -110,6 +111,15 @@ export default class AuthController {
       res.cookie("accessToken",accessToken,{sameSite:true,httpOnly:true,secure:NODE_ENV==="production"});
       return res.status(200).json(new ApiResponse(200,accessToken));
       
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getVerificationMail(req: Request, res: Response, next: NextFunction):Promise<any>{
+    try {
+      const {email} =req.body;
+      const isMailSent = await this.authService.getVerificationMail(email);
+      return res.status(200).json(new ApiResponse(200,{},"Verificatio Mail has been sent"));
     } catch (error) {
       next(error);
     }

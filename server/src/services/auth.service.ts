@@ -12,6 +12,7 @@ import {
 import { IUser } from "../interfaces/user.interface";
 import { sendMail } from "../config/email.config";
 import {
+  ACCOUNT_VERIFICATION_MAIL,
   ACCOUNT_VERIFICATION_SUCCESS,
   RESET_PASSWORD_LINK,
 } from "../emailTemplates";
@@ -150,6 +151,29 @@ export default class AuthService {
       where: { id: user.id },
       data: { password: hasedPassword },
     });
+  }
+  async getVerificationMail(email: string): Promise<any> {
+    const user = await this._prisma.user.findFirst({
+      where: { email },
+    });
+    if (!user) {
+      throw new ApiError(404, "Email not registered.");
+    }
+    const token = tokenService.accountVerificationToken({
+      email: user.email,
+      id: user.id,
+    });
+    await sendMail(
+      user.email,
+      "Verify your Account",
+      ACCOUNT_VERIFICATION_MAIL.replace(
+        "{{verification_link}}",
+        NODE_ENV === "production"
+          ? ""
+          : `http://localhost:5173/verify-account?token=${token}`
+      ).replace("{{name}}", user.name)
+    );
+    return true;
   }
   generateTokens(userData: {
     name: string;

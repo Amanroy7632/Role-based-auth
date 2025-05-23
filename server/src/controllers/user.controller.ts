@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import UserService from "../services/user.service";
-import { ApiError, ApiResponse, filterQuery, RequestValidator } from "../utils";
+import { ApiError, ApiResponse, filterQuery, RequestValidator,uploadOnCloudinary } from "../utils";
 import { CreateUserRequest, UpdateUserRequest } from "../dto/user.dto";
 import {redis,scanAndDeleteKeys} from "../config/redis.config"
 export default  class UserController{
@@ -39,7 +39,15 @@ export default  class UserController{
         if (errors.errors) {
             return next(new ApiError(400,errors.errors.toString()));
         }
-        const user = await this.userService.updateUser(uId,req.body);
+        let imageUrl ='';
+        const file =req.file;
+        if (file) {
+            const response = await uploadOnCloudinary(file.path);
+            if (response) {
+                imageUrl= response.secure_url;
+            }
+        }
+        const user = await this.userService.updateUser(uId,{...req.body,profileImg:imageUrl?imageUrl:""});
         return res.status(200).json(new ApiResponse(200,user,"User updated succssfully."));
        } catch (error) {
         next(error);
@@ -48,19 +56,25 @@ export default  class UserController{
     async getUsers(req:Request,res:Response,next:NextFunction):Promise<any>{
         try {
             const {page=1,limit=10,search=''} =req.query;
+            
             const {pageLimit,currentPage,offset} = filterQuery.getPaginatedValue(page,limit);
-            const cachedKey = `USERS:CACHED:page:${currentPage}:limit:${pageLimit}`;
+            const safeSearchText = filterQuery.removeSpecialChars(search.toString());
+            let cachedKey = `USERS:CACHED:page:${currentPage}:limit:${pageLimit}`;
+            if (safeSearchText) {
+                cachedKey+=`search:${safeSearchText}`;
+            }
             const cachedData = await redis.get(cachedKey);
             if (cachedData) {
                 return res.status(200).json(new ApiResponse(200,JSON.parse(cachedData)));
             }
-            const {users,totalUsers} = await this.userService.getUsers(pageLimit,offset);
+            const {users,totalUsers} = await this.userService.getUsers(pageLimit,offset,safeSearchText);
             const responseData={
                 users,
                 metaData:{
                     currentPage,
                     pageLimit,
-                    totalPages:Math.ceil(totalUsers/pageLimit)
+                    totalPages:Math.ceil(totalUsers/pageLimit),
+                    total:totalUsers
                 }
             }
             if (totalUsers) {
@@ -99,6 +113,7 @@ export default  class UserController{
             if (user) {
                 redis.del(cachedKey);
             }
+            await scanAndDeleteKeys(`USERS:CACHED:page*`);
             return res.status(200).json(new ApiResponse(200,user,"User deleted successfully."));
         } catch (error) {
             next(error);
