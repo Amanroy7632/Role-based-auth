@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { BASE_URL } from "../constant";
+import { BASE_URL } from "../../constant";
 
 const AccountVerificationPage = () => {
   const {
@@ -9,19 +9,23 @@ const AccountVerificationPage = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm();
-
+  const [isSaving, setIsSaving] = useState(false);
   const onSubmit = async (data) => {
     try {
-        const response = await axios.post(`${BASE_URL}/auth/get-verification-link`,data);
-        if (response.status===200) {
-            alert("Account verificatio link sent to your registered email.")
-                reset();
-        }
+      setIsSaving(true);
+      const response = await axios.post(
+        `${BASE_URL}/auth/get-verification-link`,
+        data
+      );
+      if (response.status === 200) {
+        alert("Account verificatio link sent to your registered email.");
+        reset();
+      }
     } catch (error) {
-        alert("Failed to send mail");
+      alert("Failed to send mail");
+    } finally {
+      setIsSaving(false);
     }
-   
-
   };
 
   return (
@@ -38,7 +42,9 @@ const AccountVerificationPage = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               {...register("email", {
@@ -52,16 +58,19 @@ const AccountVerificationPage = () => {
               placeholder="you@example.com"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={isSaving}
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
           >
-            Send Verification Link
+            {isSaving?"Sending..":"Send Verification Link"}
           </button>
         </form>
 

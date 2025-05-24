@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaCircle } from "react-icons/fa";
-import { BASE_URL } from "../constant";
+import { BASE_URL } from "../../constant";
 
 const VerifyAccountPage = () => {
   const [status, setStatus] = useState("loading");

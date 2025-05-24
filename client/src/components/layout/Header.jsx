@@ -13,12 +13,12 @@ const Navbar = () => {
   const activeLinkClass = "text-indigo-600 font-semibold";
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-10">
+    <nav className="bg-white shadow-md fixed w-full z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="text-indigo-600 font-bold text-xl">
-            MyApp
+            Aman.dev
           </Link>
 
           {/* Desktop Navigation */}

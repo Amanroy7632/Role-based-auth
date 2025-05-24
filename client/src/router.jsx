@@ -9,7 +9,11 @@ const DashboardLayout = React.lazy(() => import("./layouts/dahboardLayout"));
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <Suspense fallback={<NavbarProgressLoader />}>
+        <Layout />
+      </Suspense>
+    ),
     children: [...landingRoutes],
   },
   {

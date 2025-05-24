@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { BASE_URL } from "../constant";
+import { BASE_URL } from "../../constant";
 import { Link } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
