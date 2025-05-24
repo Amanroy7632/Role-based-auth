@@ -75,6 +75,8 @@ export default class AuthController {
       }
       return res.status(200).json(new ApiResponse(200,{},"Reset password link sent to email."));
     } catch (error) {
+      console.log(error);
+      
       next(error);
     }
   }
